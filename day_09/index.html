@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<canvas id="myChart"></canvas>
+    <script src="https://unpkg.com/chart.js@4.0.1/dist/chart.umd.js"></script>
+    <script src="./data.js"></script>
+    <script>
+      const data = {
+        datasets: [
+          {
+            label: 'Scatter Dataset',
+            data: visited,
+            backgroundColor: 'rgb(255, 99, 132)'
+          },
+          {
+            label: 'tails',
+            data: tails,
+            backgroundColor: 'rgb(99, 132, 255)'
+          }
+        ],
+      };
+      const config = {
+        type: 'scatter',
+        data: data,
+        options: {
+          scales: {
+            x: {
+              type: 'linear',
+              position: 'bottom'
+            }
+          }
+        }
+      };
+      const ctx = document.getElementById('myChart');
+
+      new Chart(ctx, config);
+    </script>
+</body>
+</html>
