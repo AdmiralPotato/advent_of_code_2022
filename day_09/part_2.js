@@ -116,7 +116,7 @@ console.log('tails', JSON.stringify(tails));
 
 var output = `
 var visited = ${'[\n\t' + Object.keys(visited).join(',\n\t') + '\n]'};
-var tails = ${'[\n\t' + Object.keys(visited).join(',\n\t') + '\n]'};
+var tails = ${'[\n\t' + tails.map((item) => JSON.stringify(item)).join(',\n\t') + '\n]'};
 `;
 fs.writeFileSync('data.js', output);
 
