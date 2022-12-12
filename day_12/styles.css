@@ -1,5 +1,5 @@
 html, body {
-    font-size: 16px;
+    font-size: 12px;
     min-height: 100%;
     height: 100%;
 }
@@ -17,8 +17,8 @@ body {
 }
 
 .cell {
-    width: 24px;
-    height: 24px;
+    width: 32px;
+    height: 32px;
     position: relative;
 }
 
@@ -26,16 +26,19 @@ body {
     display: block;
     content: '🚩';
     position: absolute;
+    font-size: 24px;
 }
 .cell.end:before {
     display: block;
     content: '⭐';
     position: absolute;
+    font-size: 24px;
 }
 .cell.current:before {
     display: block;
     content: '🐐';
     position: absolute;
+    font-size: 24px;
 }
 .cell.score:after {
     display: block;

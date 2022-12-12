@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Day 12, part 1</title>
+    <link href="./styles.css" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <pre>
+            {{
+                {
+                    rows,
+                    columns,
+                    message
+                }
+            }}
+        </pre>
+        <button
+            @click="step"
+        >Step</button>
+        <button
+            @click="animate"
+        >Animate</button>
+        <button
+            @click="stop"
+        >stop</button>
+        <table>
+            <tr
+                 v-for="(i, y) in rows"
+            >
+                <td
+                    v-for="(j, x) in (columns)"
+                    class="cell"
+                    v-bind="cellBind(x, y)"
+                ></td>
+            </tr>
+        </table>
+    </div>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="./part_2.js"></script>
+</body>
+</html>
