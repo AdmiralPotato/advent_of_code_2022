@@ -17,6 +17,7 @@ const directionMap = {
 window.app = createApp({
   data() {
     return {
+      text: '',
       columns: 0,
       rows: 0,
       data: [],
@@ -70,10 +71,13 @@ window.app = createApp({
     getValueAtIndex (index) {
       return this.data[index];
     },
+    handleSubmit () {
+      this.init(this.text)
+    },
     init (input) {
-      const text = input.trim()
-      const columns = text.indexOf('\n')
-      let data = text
+      this.text = input.trim()
+      const columns = this.text.indexOf('\n')
+      let data = this.text
         .replace(/\n/g, '')
         .split('');
 
@@ -91,7 +95,8 @@ window.app = createApp({
       this.data = data;
       this.indexOfStart = indexOfEnd;
       this.indexOfEnd = indexOfStart;
-      this.goats.push(this.indexOfStart);
+      this.goats = [this.indexOfStart];
+      this.sparseData = [];
       this.sparseData[this.indexOfStart] = 0;
 
       console.log('columns', columns);

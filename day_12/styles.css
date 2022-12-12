@@ -16,6 +16,12 @@ body {
     color: #ccc;
 }
 
+textarea {
+    font-family: monospace;
+    background-color: #000;
+    color: #ccc;
+}
+
 .cell {
     width: 32px;
     height: 32px;

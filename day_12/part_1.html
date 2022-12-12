@@ -39,6 +39,14 @@
                 ></td>
             </tr>
         </table>
+        <form
+            @submit.prevent="handleSubmit"
+        >
+            <textarea
+                v-model="text"
+            ></textarea>
+            <input type="submit" />
+        </form>
     </div>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="./part_1.js"></script>
