@@ -20,11 +20,10 @@ window.app = createApp({
       columns: 0,
       rows: 0,
       data: [],
-      visited: [],
-      path: [],
+      goats: [],
       sparseData: [],
-      currentPosition: 0,
       message: '',
+      currentIteration: 0,
     }
   },
   created () {
@@ -92,9 +91,8 @@ window.app = createApp({
       this.data = data;
       this.indexOfStart = indexOfStart;
       this.indexOfEnd = indexOfEnd;
-      this.path.push(this.indexOfStart);
-      this.visited.push(this.indexOfStart);
-      this.currentPosition = this.indexOfStart;
+      this.goats.push(this.indexOfStart);
+      this.sparseData[this.indexOfStart] = 0;
 
       console.log('columns', columns);
       console.log('rows', rows);
@@ -110,9 +108,10 @@ window.app = createApp({
       const index = this.getIndexAtPos(x, y)
       const value = this.data[index];
       const v = Math.floor((value / 36) * 255);
+      const score = this.sparseData[index];
       return {
         style: {
-          color: '#333',
+          color: `hsl(${score % 360} 100% 50%)`,
           backgroundColor: `rgb(${v} ${v} ${v})`,
         },
         class: {
@@ -120,11 +119,10 @@ window.app = createApp({
           ['y-' + y]: true,
           start: index === this.indexOfStart,
           end: index === this.indexOfEnd,
-          visited: this.visited.includes(index),
-          path: this.path.includes(index),
-          current: index === this.currentPosition,
+          score,
+          current: this.goats.includes(index),
         },
-        innerText: value
+        innerText: score
       };
     },
     getValidNeighbors (index) {
@@ -134,52 +132,35 @@ window.app = createApp({
           return this.getDirection(current, direction)
         })
         .filter((v) => (v?.value <= current.value + 1))
-        .filter((v) => !this.path.includes(v?.index))
-        .filter((v) => !this.visited.includes(v?.index));
+        .filter((v) => this.sparseData[v?.index] === undefined);
       neighbors.sort((a, b) => b.value - a.value);
       return neighbors;
     },
     step () {
-      const neighbors = this.getValidNeighbors(this.currentPosition);
-      if(neighbors.length) {
-        const next = neighbors[0].index;
-        this.path.push(next);
-        this.currentPosition = next;
+      this.currentIteration += 1;
+      const allNeighbors = this.goats.map(this.getValidNeighbors);
+      this.goats = [];
+      const neighbors = allNeighbors.reduce(
+        (acc, v) => acc.concat(v),
+        []
+      )
+      neighbors.forEach((neighbor) => {
+        const next = neighbor.index;
+        if (!this.goats.includes(next)) {
+          this.goats.push(next);
+        }
+        this.sparseData[next] = this.sparseData[next] || this.currentIteration;
         if (next === this.indexOfEnd) {
           this.message = `END LOCATED!!! ${neighbors[0].index}`;
-          this.message += ` Steps: ${this.path.length - 1}`;
+          this.message += ` Steps: ${this.currentIteration}`;
           this.stop();
         }
-      } else {
-        // must be a dead end. Go back.
-        const badPath = this.path.pop();
-        this.visited.push(badPath);
-        this.currentPosition = this.path.slice(-1)[0];
-      }
+      })
     },
     animate () {
       this.stop();
       this.interval = setInterval(
         () => {
-          this.step();
-          this.step();
-          this.step();
-          this.step();
-          this.step();
-          this.step();
-          this.step();
-          this.step();
-          this.step();
-          this.step();
-          this.step();
-          this.step();
-          this.step();
-          this.step();
-          this.step();
-          this.step();
-          this.step();
-          this.step();
-          this.step();
           this.step();
         },
         0

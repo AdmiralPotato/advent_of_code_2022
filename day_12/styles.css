@@ -37,7 +37,7 @@ body {
     content: '🐐';
     position: absolute;
 }
-.cell.visited:after {
+.cell.score:after {
     display: block;
     content: '';
     position: absolute;
